@@ -1,0 +1,128 @@
+<ds-city-search (handleCityChange)="handleCityChange($event)" />
+
+<ng-container *ngIf="city$ | async as city;else chooseCity">
+  <p>
+    Informacje dla {{ city?.LocalizedName }}
+  </p>
+
+  <div
+    *ngIf="temperature$ | async as temperature"
+    class="wrapper"
+  >
+    Temperatura:
+    <span>
+      {{ temperature }} °C
+    </span>
+
+    <span>
+      {{ temperature >20 ? '🔥' : '🥶' }}
+    </span>
+  </div>
+
+  <div
+    *ngIf="forecastOneHour$ | async as forecastOneHour"
+    class="wrapper"
+  >
+    Temperatura za godzinę:
+    <span>
+      {{ forecastOneHour?.Temperature?.Value }}
+      °{{forecastOneHour?.Temperature?.Unit}}
+    </span>
+
+    <span>
+      {{ forecastOneHour?.Temperature?.Value >20 ? '🔥' : '🥶' }}
+    </span>
+  </div>
+
+  <div
+    *ngIf="forecastTwelveHour$ | async as forecastTwelveHour"
+    class="wrapper"
+  >
+    Temperatura za 12 godzin:
+    <span>
+      {{ forecastTwelveHour?.Temperature?.Value }}
+      °{{forecastTwelveHour?.Temperature?.Unit}}
+    </span>
+
+    <span>
+      {{ forecastTwelveHour?.Temperature?.Value >20 ? '🔥' : '🥶' }}
+    </span>
+  </div>
+
+  <div
+    *ngIf="forecastOneDay$ | async as forecastOneDay"
+    class="wrapper"
+  >
+    <div>
+      Minimalna temperatura jutro:
+      <span>
+        {{ forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Value }}
+        °{{forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Unit}}
+      </span>
+      <span>
+        {{ forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Value >20 ? '🔥' : '🥶' }}
+      </span>
+    </div>
+
+    <div>
+      Maksymalna temperatura jutro:
+      <span>
+        {{ forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Value }}
+        °{{forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Unit}}
+      </span>
+      <span>
+        {{ forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Value >20 ? '🔥' : '🥶' }}
+      </span>
+    </div>
+  </div>
+
+  <div
+    *ngIf="forecastFiveDay$ | async as forecastFiveDay"
+    class="wrapper"
+  >
+    <div>
+      Minimalna temperatura za 5 dni:
+      <span>
+        {{ forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Value }}
+        °{{forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Unit}}
+      </span>
+      <span>
+        {{ forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Value >20 ? '🔥' : '🥶' }}
+      </span>
+    </div>
+
+    <div>
+      Maksymalna temperatura za 5 dni:
+      <span>
+        {{ forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Value }}
+        °{{forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Unit}}
+      </span>
+      <span>
+        {{ forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Value >20 ? '🔥' : '🥶' }}
+      </span>
+    </div>
+  </div>
+
+
+
+  <div
+    *ngIf="yestardaysTemperature$ | async as yestardaysTemperature"
+    class="wrapper"
+  >
+    Temperatura wczoraj:
+    <span>
+      {{ yestardaysTemperature }} °C
+    </span>
+    <span>
+      {{ yestardaysTemperature >20 ? '🔥' : '🥶' }}
+    </span>
+  </div>
+
+
+</ng-container>
+
+<ng-template #chooseCity>
+  <h2>
+    Wybierz miasto by znaleźć informacje
+  </h2>
+</ng-template>
