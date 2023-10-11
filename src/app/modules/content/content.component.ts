@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CitySearchComponent } from '@modules/city-search/city-search.component';
-import { WeatherService } from '@core/services/weather.service';
-import { BehaviorSubject, Observable, Subject, filter, map, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { City } from '@core/interfaces/city.interface';
 import { Forecast, ForecastHour } from '@core/interfaces/weather.interface';
+import { WeatherService } from '@core/services/weather.service';
+import { CitySearchComponent } from '@modules/city-search/city-search.component';
+import { BehaviorSubject, Observable, filter, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'ds-content',
