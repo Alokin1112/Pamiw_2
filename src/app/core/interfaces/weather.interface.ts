@@ -7,7 +7,6 @@ export interface Weather {
   }
 }
 
-
 export interface Forecast {
   DailyForecasts: {
     Temperature: {
@@ -29,3 +28,14 @@ export interface ForecastHour {
     Unit: string,
   }
 }
+
+export interface GeneralTemperatureForecast {
+  minimum: GeneralTemperature,
+  maximum: GeneralTemperature,
+}
+
+export interface GeneralTemperature {
+  value: string,
+  icon: string,
+}
+

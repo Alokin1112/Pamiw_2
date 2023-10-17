@@ -6,7 +6,9 @@ import { Forecast, ForecastHour, Weather } from '@core/interfaces/weather.interf
 import { environment } from '@env/environment';
 import { Observable, map } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class WeatherService {
 
   private http = inject(HttpClient);

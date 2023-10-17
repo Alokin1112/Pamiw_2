@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { WeatherService } from '@core/services/weather.service';
 import { Observable, debounceTime, distinctUntilChanged, of, switchMap, tap } from 'rxjs';
 import { City } from '@core/interfaces/city.interface';
+import { MainViewModel } from '@core/view-models/main.view-model';
 
 @Component({
   selector: 'ds-city-search',
@@ -19,8 +20,7 @@ import { City } from '@core/interfaces/city.interface';
 })
 export class CitySearchComponent implements OnInit {
 
-  @Output() handleCityChange = new EventEmitter<City>();
-
+  mainViewModel = inject(MainViewModel);
   weatherService = inject(WeatherService);
   control = new FormControl<string>('');
   cities: City[];
@@ -38,6 +38,6 @@ export class CitySearchComponent implements OnInit {
 
   onSelect(val: MatAutocompleteSelectedEvent): void {
     const value = val?.option?.value as string;
-    this.handleCityChange.emit(this.cities.find((item) => item.LocalizedName == value));
+    this.mainViewModel.selectedCity = this.cities.find((item) => item.LocalizedName == value);
   }
 }

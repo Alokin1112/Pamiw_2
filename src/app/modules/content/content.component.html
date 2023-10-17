@@ -1,125 +1,128 @@
-<ds-city-search (handleCityChange)="handleCityChange($event)" />
+<ds-city-search />
 
-<ng-container *ngIf="city$ | async as city;else chooseCity">
+<ng-container *ngIf="mainViewModel?.selectedCity;else chooseCity">
   <p>
-    Informacje dla {{ city?.LocalizedName }}
+    Informacje dla {{ mainViewModel?.selectedCity?.LocalizedName }}
   </p>
 
-  <div
-    *ngIf="temperature$ | async as temperature"
-    class="wrapper"
-  >
-    Temperatura:
-    <span>
-      {{ temperature }} °C
-    </span>
-
-    <span>
-      {{ temperature >20 ? '🔥' : '🥶' }}
-    </span>
-  </div>
-
-  <div
-    *ngIf="forecastOneHour$ | async as forecastOneHour"
-    class="wrapper"
-  >
-    Temperatura za godzinę:
-    <span>
-      {{ forecastOneHour?.Temperature?.Value }}
-      °{{forecastOneHour?.Temperature?.Unit}}
-    </span>
-
-    <span>
-      {{ forecastOneHour?.Temperature?.Value >20 ? '🔥' : '🥶' }}
-    </span>
-  </div>
-
-  <div
-    *ngIf="forecastTwelveHour$ | async as forecastTwelveHour"
-    class="wrapper"
-  >
-    Temperatura za 12 godzin:
-    <span>
-      {{ forecastTwelveHour?.Temperature?.Value }}
-      °{{forecastTwelveHour?.Temperature?.Unit}}
-    </span>
-
-    <span>
-      {{ forecastTwelveHour?.Temperature?.Value >20 ? '🔥' : '🥶' }}
-    </span>
-  </div>
-
-  <div
-    *ngIf="forecastOneDay$ | async as forecastOneDay"
-    class="wrapper"
-  >
-    <div>
-      Minimalna temperatura jutro:
+  <ng-container *ngIf="mainViewModel?.weatherViewModel$ | async as weatherViewModel;else loading">
+    <div
+      *ngIf="weatherViewModel?.currentTemperature as temperature"
+      class="wrapper"
+    >
+      Temperatura:
       <span>
-        {{ forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Value }}
-        °{{forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Unit}}
+        {{ temperature?.value }}
       </span>
+
       <span>
-        {{ forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Value >20 ? '🔥' : '🥶' }}
+        {{temperature?.icon }}
       </span>
     </div>
 
-    <div>
-      Maksymalna temperatura jutro:
+    <div
+      *ngIf="weatherViewModel?.oneHourTemperature as temperature"
+      class="wrapper"
+    >
+      Temperatura za godzinę:
       <span>
-        {{ forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Value }}
-        °{{forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Unit}}
+        {{ temperature?.value }}
       </span>
-      <span>
-        {{ forecastOneDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Value >20 ? '🔥' : '🥶' }}
-      </span>
-    </div>
-  </div>
 
-  <div
-    *ngIf="forecastFiveDay$ | async as forecastFiveDay"
-    class="wrapper"
-  >
-    <div>
-      Minimalna temperatura za 5 dni:
       <span>
-        {{ forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Value }}
-        °{{forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Unit}}
-      </span>
-      <span>
-        {{ forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Minimum?.Value >20 ? '🔥' : '🥶' }}
+        {{temperature?.icon }}
       </span>
     </div>
 
-    <div>
-      Maksymalna temperatura za 5 dni:
+    <div
+      *ngIf="weatherViewModel?.twelveHoursTemperature as temperature"
+      class="wrapper"
+    >
+      Temperatura za 12 godzin:
       <span>
-        {{ forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Value }}
-        °{{forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Unit}}
+        {{ temperature?.value }}
       </span>
+
       <span>
-        {{ forecastFiveDay?.DailyForecasts?.[0]?.Temperature?.Maximum?.Value >20 ? '🔥' : '🥶' }}
+        {{temperature?.icon }}
       </span>
     </div>
-  </div>
+
+    <div
+      *ngIf="weatherViewModel?.oneDayTemperature as temperature"
+      class="wrapper"
+    >
+      <div>
+        Minimalna temperatura jutro:
+        <span>
+          {{ temperature?.minimum?.value }}
+        </span>
+
+        <span>
+          {{temperature?.minimum?.icon }}
+        </span>
+      </div>
+
+      <div>
+        Maksymalna temperatura jutro:
+        <span>
+          {{ temperature?.maximum?.value }}
+        </span>
+
+        <span>
+          {{temperature?.maximum?.icon }}
+        </span>
+      </div>
+    </div>
+
+    <div
+      *ngIf="weatherViewModel?.fiveDayTemperature as temperature"
+      class="wrapper"
+    >
+      <div>
+        Minimalna temperatura za 5 dni:
+        <span>
+          {{ temperature?.minimum?.value }}
+        </span>
+
+        <span>
+          {{temperature?.minimum?.icon }}
+        </span>
+      </div>
+
+      <div>
+        Maksymalna temperatura za 5 dni:
+        <span>
+          {{ temperature?.maximum?.value }}
+        </span>
+
+        <span>
+          {{temperature?.maximum?.icon }}
+        </span>
+      </div>
+    </div>
 
 
+    <div
+      *ngIf="weatherViewModel?.yesterdayTemperature as temperature"
+      class="wrapper"
+    >
+      Temperatura wczoraj:
+      <span>
+        {{ temperature?.value }}
+      </span>
 
-  <div
-    *ngIf="yestardaysTemperature$ | async as yestardaysTemperature"
-    class="wrapper"
-  >
-    Temperatura wczoraj:
-    <span>
-      {{ yestardaysTemperature }} °C
-    </span>
-    <span>
-      {{ yestardaysTemperature >20 ? '🔥' : '🥶' }}
-    </span>
-  </div>
-
+      <span>
+        {{temperature?.icon }}
+      </span>
+    </div>
+  </ng-container>
 
 </ng-container>
+
+<ng-template #loading>
+  <mat-spinner />
+</ng-template>
 
 <ng-template #chooseCity>
   <h2>
